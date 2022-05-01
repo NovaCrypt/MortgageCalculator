@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello world! This application is in early alpha.");
 
         // MORTGAGE CALCULATOR
         // OLIVER HUNTER
@@ -21,11 +20,27 @@ public class Main {
 
         Scanner input = new Scanner(System.in); // Create scanner for reading data input
 
-        System.out.print("Principle: £"); // Prompt for the principal amount
-        float principle = input.nextFloat(); // Read data input for principle
+        float principle; // Define principle variable in main scope
+        while (true) { // Begin validation loop for principle
+            System.out.print("Principle: £"); // Prompt for the principal amount
+            principle = input.nextFloat(); // Read data input for principle
+            if (principle < 1_000.0) { // Exception if principle is lover than £1k
+                System.out.println("Our minimum loan is £1,000...");
+            } else if (principle > 1_000_000.0) { // Exception if principle is greater than £1 million
+                System.out.println("We only provide loans up to £1,000,000...");
+            } else break; // Break loop if valid
+        }
 
-        System.out.print("Period (Months): "); // Prompt for term of the loan
-        byte term = input.nextByte(); // Read data input for term of loan
+        short term; // Define term variable in main scope
+        while (true) { // Begin validation loop
+            System.out.print("Period (Months): "); // Prompt for term of the loan
+            term = input.nextShort(); // Read data input for term of loan
+            if (term < 6) { // Exception is term is shorter than 6 months
+                System.out.println("We have a minimum term of 6 months...");
+            } else if (term > 600) { // Exception is term is longer than 50 years
+                System.out.println("We have a maximum term of 50 years (600 months)...");
+            } else break; // Break loop if valid
+        }
 
         // INTEREST CALCULATION
 
