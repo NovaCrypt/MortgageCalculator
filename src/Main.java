@@ -12,7 +12,6 @@ public class Main {
 
         // CONSTANT VARIABLES
 
-        final float ANNUAL_INTEREST = 12.89F; // The annual APR interest rate. (Percentage)
         final byte PERCENT = 100; // Percent for percentage conversion
         final byte MONTHS_IN_YEAR = 12; // How many months in a year
 
@@ -22,7 +21,8 @@ public class Main {
 
         float principle; // Define principle variable in main scope
         while (true) { // Begin validation loop for principle
-            System.out.print("Principle: £"); // Prompt for the principal amount
+            System.out.println("\nPlease provide desired loan amount...\n");
+            System.out.print("- £"); // Prompt for the principal amount
             principle = input.nextFloat(); // Read data input for principle
             if (principle < 1_000.0) { // Exception if principle is lover than £1k
                 System.out.println("Our minimum loan is £1,000...");
@@ -33,6 +33,7 @@ public class Main {
 
         short term; // Define term variable in main scope
         while (true) { // Begin validation loop
+            System.out.println("\nPlease say how many months you'd like to pay your loan back over. (max 600)\n");
             System.out.print("Period (Months): "); // Prompt for term of the loan
             term = input.nextShort(); // Read data input for term of loan
             if (term < 6) { // Exception is term is shorter than 6 months
@@ -42,12 +43,28 @@ public class Main {
             } else break; // Break loop if valid
         }
 
+        float annualInterest = 0; // Initialise interest variable
+        boolean whileBreak = false; // Provide the while loop breaking variable
+        while (!whileBreak) { // Begin validation loop
+            System.out.println("\nPlease provide an interest rate for mortgage calculation...\n");
+            System.out.print("- %"); // Prompt for annual interest percentage
+            annualInterest = input.nextFloat(); // Scan the user input for the annual interest
+            if (annualInterest < 0.0F) {
+                System.out.println("Please provide a positive number, or none at all...");
+            } else if (annualInterest > 80) {
+                System.out.println("To prevent death by debt induced shock, we have limited this field to 80%... " +
+                        "Sorry for any inconvenience.");
+            } else {
+                whileBreak = true; // Breaks while loop
+            }
+        }
+
         // INTEREST CALCULATION
 
-        float monthlyInterest = ANNUAL_INTEREST / PERCENT / MONTHS_IN_YEAR; // Calculate monthly interest rate
+        float monthlyInterest = annualInterest / PERCENT / MONTHS_IN_YEAR; // Calculate monthly interest rate
         double mortgage = principle // Calculate monthly mortgage payments
-                * (monthlyInterest * Math.pow(1 + monthlyInterest, term))
-                / (Math.pow(1+ monthlyInterest, term) - 1);
+                    * (monthlyInterest * Math.pow(1 + monthlyInterest, term))
+                    / (Math.pow(1+ monthlyInterest, term) - 1);
 
         // MONTHLY PAYBACKS
 
