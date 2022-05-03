@@ -65,10 +65,14 @@ public class Main {
         double mortgage = principle // Calculate monthly mortgage payments
                     * (monthlyInterest * Math.pow(1 + monthlyInterest, term))
                     / (Math.pow(1+ monthlyInterest, term) - 1);
+        double mortgageTotal = mortgage * term;
 
         // MONTHLY PAYBACKS
 
-        System.out.println("Mortgage: " + NumberFormat.getCurrencyInstance().format(mortgage));
+        NumberFormat getCurrency = NumberFormat.getCurrencyInstance();
+        System.out.println("Mortgage total (Interest included): " + getCurrency.format(mortgageTotal));
+        // ^ - Prints the total owed once interest is applied.
+        System.out.println("Monthly total: " + getCurrency.format(mortgage));
         // ^ - Prints out monthly payments owed
 
     }
